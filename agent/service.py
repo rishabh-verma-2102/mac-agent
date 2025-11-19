@@ -37,7 +37,7 @@ class AgentService:
             return response.message.content
 
         loop_count = 0
-        while response.message.tool_calls and loop_count < 5:
+        while response.message.tool_calls and loop_count < 5:  # Loop with max limit set to 5, for complex agent use cases there is a possibility of multiple tool calls.
             tool_messages = self._tool_call_orchestrator(response.message.tool_calls)
             self.messages.extend(tool_messages)
 
@@ -67,7 +67,7 @@ class AgentService:
 
     def _chat_call(self) -> ChatResponse:
         response: ChatResponse = chat(
-            'llama3.1',
+            'llama3.1',  # 8B Params
             messages=self.messages,
             tools=self.TOOLS,
         )
